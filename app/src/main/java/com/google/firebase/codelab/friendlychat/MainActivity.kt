@@ -57,18 +57,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 @Suppress("IMPLICIT_CAST_TO_ANY")
 class MainActivity : AppCompatActivity() {
-    class MessageViewHolder(v: View?) : RecyclerView.ViewHolder(v!!) {
-        var messageTextView: TextView
-        var messageImageView: ImageView
-        var messengerTextView: TextView
-        var messengerImageView: CircleImageView
-
-        init {
-            messageTextView = itemView.findViewById<View>(R.id.messageTextView) as TextView
-            messageImageView = itemView.findViewById<View>(R.id.messageImageView) as ImageView
-            messengerTextView = itemView.findViewById<View>(R.id.messengerTextView) as TextView
-            messengerImageView = itemView.findViewById<View>(R.id.messengerImageView) as CircleImageView
-        }
+    class MessageViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+        var messageTextView: TextView = itemView.findViewById<View>(R.id.messageTextView) as TextView
+        var messageImageView: ImageView = itemView.findViewById<View>(R.id.messageImageView) as ImageView
+        var messengerTextView: TextView = itemView.findViewById<View>(R.id.messengerTextView) as TextView
+        var messengerImageView: CircleImageView = itemView.findViewById<View>(R.id.messengerImageView) as CircleImageView
     }
 
     private var mUsername: String = ""
@@ -114,15 +107,12 @@ class MainActivity : AppCompatActivity() {
         mSignInClient = GoogleSignIn.getClient(this, gso)
 
         // Initialize ProgressBar and RecyclerView.
-        //mProgressBar = findViewById<View>(R.id.progressBar) as ProgressBar
-        //messageRecyclerView = findViewById<View>(R.id.messageRecyclerView) as RecyclerView
         val layoutManager = LinearLayoutManager(this).apply {
             stackFromEnd = true
         }
 
         messageRecyclerView.layoutManager = layoutManager
 
-        //mProgressBar.setVisibility(ProgressBar.INVISIBLE);
         // New child entries
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().reference
         val parser: SnapshotParser<FriendlyMessage?> = SnapshotParser { dataSnapshot ->
